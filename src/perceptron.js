@@ -25,7 +25,7 @@ class Perceptron {
         this.weights[i] += gradient * features[i] * this.learning_rate;
       }
       
-      this.bias += gradient;
+      this.bias += gradient * this.learning_rate;
     }
   }
   
