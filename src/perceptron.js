@@ -1,51 +1,55 @@
 class Perceptron {
-  constructor(lr = 0.001) {
-    this.learning_rate = lr;
+    weights = [];
 
-    this.weights = [];
-    this.bias = 1;
-  }
-
-  train(features, label, prediction) {
-    // The length of the feature array must be the same as weights.
-    if (features.length !== this.weights.length) this.weights = features;
-
-    // if the prediction is not correct
-    if (label !== prediction) {
-      // The gradient or the error
-      let gradient = label - prediction;
-
-      // Iterate through the weights
-      for (let i = 0; i < this.weights.length; i++) {
-        // Try to get the correct weight
-        this.weights[i] += gradient * features[i] * this.learning_rate;
-      }
-
-      this.bias += gradient * this.learning_rate;
+    constructor(lr = -5) {
+        this.setLearningRate(lr);
     }
-  }
 
-  sum(features) {
-    // Stop if all the features don't have weight
-    if (features.length !== this.weights.length) return null;
-
-    // Iterate through the weights
-    let sum = 0;
-    for (let i = 0; i < this.weights.length; i++) {
-      // Sum the input*weight
-      sum += this.weights[i] * features[i];
+    setWeights(weights) {
+        this.weights = weights;
+        return this;
     }
-    sum += this.bias;
 
-    return sum;
-  }
+    setLearningRate(lr) {
+        this.learning_rate = Math.pow(10, lr);
+        return this;
+    }
 
-  activate(sum) {
-    // Return the prediction
-    return sum < 0 ? -1 : 1;
-  }
+    getLoss(label, prediction) {
+        return label - prediction;
+    }
 
-  predict(features) {
-    return this.activate(this.sum(features));
-  }
+    train(features, error) {
+        // The length of the feature array must be the same as weights.
+        if (features.length !== this.weights.length) this.weights = features;
+
+        // Iterate through the feature weights.
+        for (let i = 0; i < this.weights.length; i++) {
+            // Try to get the correct weight
+            this.weights[i] += error * features[i] * this.learning_rate;
+        }
+    }
+
+    sum(features) {
+        // If features and wieghts are not equal.
+        if (features.length !== this.weights.length) this.setWeights(features);
+
+        // Iterate through the weights.
+        let sum = 0;
+        for (let i = 0; i < this.weights.length; i++) {
+            // Sum the input*weight
+            sum += this.weights[i] * features[i];
+        }
+
+        // return sum.
+        return sum;
+    }
+
+    activate(sum) {
+        return sum < 0 ? -1 : 1
+    }
+
+    predict(features) {
+        return this.activate(this.sum(features));
+    }
 }

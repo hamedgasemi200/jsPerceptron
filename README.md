@@ -6,9 +6,16 @@ A general purpose perceptron library.
 // Make an object
 let perceptron = new Perceptron();
 
-// Train
-perceptron.train(features, label);
-
-// Guess
+// Predict
 let prediction = perceptron.predict(features);
+
+// Get loss/error.
+let loss = perceptron.getLoss(label, prediction);
+
+// If has error/loss.
+if(loss)
+{
+   // Train
+   perceptron.train(features, loss);
+}
 ```
