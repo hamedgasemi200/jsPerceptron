@@ -1,8 +1,6 @@
-![Classification](examples/classification/img/example-1.png)
-
 A general purpose perceptron library.
 
-## Usage
+# Usage
 
 ```
 // Make an object
@@ -21,3 +19,11 @@ if(loss)
    perceptron.train(features, loss);
 }
 ```
+
+# Examples
+
+## Classification
+
+<p align="center">
+  <img width="350" height="350" src="examples/classification/img/example-1.png">
+</p>``
