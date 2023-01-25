@@ -1,3 +1,5 @@
+![Classification](examples/classification/img/example-1.png)
+
 A general purpose perceptron library.
 
 ## Usage
