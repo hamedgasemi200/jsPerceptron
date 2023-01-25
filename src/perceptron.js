@@ -1,54 +1,50 @@
 class Perceptron {
   constructor(lr = 0.001) {
     this.learning_rate = lr;
-    
-    this.weights = [];    
+
+    this.weights = [];
     this.bias = 1;
   }
-  
-  train(features, answer) {
-    // The length of the feature array determines the length of the weights array
-    if (features.length != this.weights.length) this.weights = features;
-    
-    // Predict
-    let prediction = this.predict(features);
-    
+
+  train(features, label, prediction) {
+    // The length of the feature array must be the same as weights.
+    if (features.length !== this.weights.length) this.weights = features;
+
     // if the prediction is not correct
-    if(prediction != answer)
-    {
+    if (label !== prediction) {
       // The gradient or the error
-      let gradient = answer - prediction;
-      
+      let gradient = label - prediction;
+
       // Iterate through the weights
-      for(let i = 0; i < this.weights.length; i++) {
+      for (let i = 0; i < this.weights.length; i++) {
         // Try to get the correct weight
         this.weights[i] += gradient * features[i] * this.learning_rate;
       }
-      
+
       this.bias += gradient * this.learning_rate;
     }
   }
-  
-  sum (features) {
+
+  sum(features) {
     // Stop if all the features don't have weight
     if (features.length !== this.weights.length) return null;
-    
+
     // Iterate through the weights
     let sum = 0;
-    for(let i = 0; i < this.weights.length; i++) {
+    for (let i = 0; i < this.weights.length; i++) {
       // Sum the input*weight
       sum += this.weights[i] * features[i];
     }
     sum += this.bias;
-    
+
     return sum;
   }
-  
+
   activate(sum) {
     // Return the prediction
     return sum < 0 ? -1 : 1;
   }
-  
+
   predict(features) {
     return this.activate(this.sum(features));
   }
